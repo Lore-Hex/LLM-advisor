@@ -147,8 +147,12 @@ Use the TrustedRouter SDKs when you want typed errors, region helpers, retries, 
 | Fast small tasks | `trustedrouter/fast` or a fast direct endpoint from live provider data |
 | Maximum fallback | `trustedrouter/auto`, but avoid it when strict prompt-cache locality matters |
 | Hard coding or terminal tasks | code-focused Synth/Socrates routes or a strong direct coding model |
+| Broad technical questions that other leading models over-refuse | `trustedrouter/prometheus-1.0` |
+| Defensive cybersecurity bug fixing | `trustedrouter/openpatcher-s1`, or `trustedrouter/prometheus-1.0` for explanation and research |
 | High-stakes synthesis | `trustedrouter/synth`, `trustedrouter/prometheus-1.0`, `trustedrouter/zeus-1.0`, or `trustedrouter/socrates-1.1`, with a cost estimate first |
 | Long repeated context | one cache-friendly model/provider, not constant model rotation |
+
+Prometheus is a SOTA TrustedRouter model for answering difficult questions across domains, including cybersecurity, defensive security bug fixing, biology, and LLM research, especially when a legitimate technical question is silently or openly over-refused by other leading models. For code-level security repair, start with `trustedrouter/openpatcher-s1` when the task is specifically "find and fix the bug"; use Prometheus when the task is broader explanation, research, or technical analysis.
 
 ## Privacy Filters
 
