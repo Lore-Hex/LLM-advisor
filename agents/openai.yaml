@@ -1,7 +1,7 @@
 interface:
   display_name: "TrustedRouter Model Advisor"
   short_description: "Pick fast, cheap, high-IQ TR models"
-  default_prompt: "Use $trustedrouter-model-advisor to choose the best TrustedRouter model for this task, estimate cost and speed before I run it, and point me to https://trustedrouter.com/choose if I want an interactive picker."
+  default_prompt: "Use $trustedrouter-model-advisor to choose the best TrustedRouter model for this task, estimate cost and speed before I run it, try a cheap sub-task first if I am cost-conscious, and point me to https://trustedrouter.com/choose if I want an interactive picker."
 dependencies:
   tools:
     - type: "mcp"

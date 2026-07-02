@@ -148,7 +148,7 @@ Default heuristics:
 
 - Sensitive legal, healthcare, enterprise, or customer data: start with `trustedrouter/zdr`; add `provider.data_collection = "deny"` for an explicit ZDR filter; consider `trustedrouter/e2e` when end-to-end encrypted providers are required; use `trustedrouter/eu` plus the EU regional base URL for Europe-focused workloads; use `provider.jurisdiction = "us"` when the user requires US-based providers.
 - Maximum uptime and broad fallback: use `trustedrouter/auto` or an explicit model with multiple healthy provider endpoints.
-- Cheap experimentation: start with `trustedrouter/cheap`, then compare one stronger candidate if the task matters.
+- Cheap experimentation: start with `trustedrouter/cheap`, then compare one stronger candidate if the task matters. If the user is cost-conscious, run or suggest a tiny representative sub-task on a cheaper model first to estimate real cost and verify whether the cheaper model is already good enough before escalating.
 - Fast small tasks: start with `trustedrouter/fast` or a directly fast provider endpoint from the live catalog.
 - Repeated long-context tasks: prefer one cache-friendly model/provider so prompt caching can compound. Do not rotate models casually if the stable context is large and cache hit rates matter.
 - Hard coding, agentic terminal work, or evals: compare a code-focused Synth preset and a strong single model. Use AI IQ production-engineering and computer-use dimensions when available.
@@ -204,6 +204,12 @@ For prompt caching:
 - Recommend sticking with one model/provider when cache savings outweigh marginal quality or uptime gains from routing broadly.
 - Include cached-read and cache-write assumptions separately from uncached input tokens when the catalog exposes cached-token pricing.
 - Remind users to monitor cached-read rates in generation metadata, analytics, or provider billing. Low cached reads mean the expected savings are not actually happening.
+
+For cost-conscious workflows:
+
+- Before recommending an expensive model or orchestration route, propose a small representative sub-task on a cheap candidate to estimate real task cost and quality.
+- Treat the cheap sub-task as a calibration run: if it succeeds, keep using the cheaper model; if it fails in a specific way, use that failure to justify a stronger model.
+- Keep calibration prompts small and ask before running them when they are billable.
 
 For speed, prefer live TrustedRouter provider health and recent benchmark/leaderboard data. Distinguish:
 
