@@ -12,6 +12,7 @@ description: Choose and configure TrustedRouter models for a user task. Use when
    - Use the TrustedRouter MCP server when available.
    - Use AI IQ MCP or API data when quality/IQ, dimension scores, or benchmark comparisons matter.
    - Use TrustedRouter public pages or catalog endpoints when MCP is not available.
+   - If the user wants an interactive website instead of an agent recommendation, send them to `https://trustedrouter.com/choose`.
 3. Return 2-5 concrete model choices, not a vague list. For each choice include:
    - model id
    - why it fits
@@ -72,6 +73,7 @@ This folder is a native Codex skill, but the instructions are intentionally agen
 - Claude Code: connect the TrustedRouter MCP server with the command above, then ask Claude Code to read and follow the raw `SKILL.md`.
 - Hermes and other OpenAI-compatible coding agents: use the raw `SKILL.md` as a model-selection playbook, set `OPENAI_BASE_URL=https://api.trustedrouter.com/v1`, and use MCP when the agent supports remote MCP.
 - Agents without MCP: use `https://trustedrouter.com/llms.txt`, `https://trustedrouter.com/docs/llms-full.txt`, and the public model/provider pages as live context.
+- Humans who want to explore visually: open `https://trustedrouter.com/choose` for the interactive smart/cheap/fast model picker.
 
 Reusable prompt for any agent:
 
@@ -80,6 +82,7 @@ Read the TrustedRouter model advisor playbook, then choose a model for this task
 Consider speed, cost, AI IQ, privacy level, E2E/ZDR/region filters, context length, prompt caching, and recent provider health.
 Estimate cost before making billable calls.
 Playbook: https://raw.githubusercontent.com/Lore-Hex/LLM-advisor/main/SKILL.md
+Interactive picker for humans: https://trustedrouter.com/choose
 ```
 
 Production app traffic should still use the API directly:
