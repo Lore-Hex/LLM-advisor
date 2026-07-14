@@ -37,7 +37,7 @@ Interactive picker: https://trustedrouter.com/choose
 ### Install as a Codex plugin
 
 ```bash
-codex plugin marketplace add Lore-Hex/LLM-advisor
+codex plugin marketplace add https://github.com/Lore-Hex/LLM-advisor.git
 codex plugin add trustedrouter-model-advisor@lore-hex
 ```
 
@@ -50,7 +50,7 @@ Use $trustedrouter-model-advisor to pick the best model for this task.
 ### Install as a Claude Code plugin
 
 ```bash
-claude plugin marketplace add Lore-Hex/LLM-advisor
+claude plugin marketplace add https://github.com/Lore-Hex/LLM-advisor.git
 claude plugin install trustedrouter-model-advisor@lore-hex
 ```
 
