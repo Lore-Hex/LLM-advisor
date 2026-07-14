@@ -1,0 +1,17 @@
+name: Plugin validation
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate Claude Code and Codex packages
+        run: python3 scripts/validate_plugin_package.py

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "lore-hex",
+  "description": "Open source developer tools from Lore Hex Corp",
+  "owner": {
+    "name": "Lore Hex Corp",
+    "email": "security@trustedrouter.com"
+  },
+  "plugins": [
+    {
+      "name": "trustedrouter-model-advisor",
+      "version": "1.0.0",
+      "description": "Choose the best TrustedRouter model using live price, speed, quality, privacy, context, and provider-health data.",
+      "author": {
+        "name": "Lore Hex Corp",
+        "email": "security@trustedrouter.com"
+      },
+      "source": "./plugins/trustedrouter-model-advisor",
+      "category": "development",
+      "homepage": "https://github.com/Lore-Hex/LLM-advisor"
+    }
+  ]
+}

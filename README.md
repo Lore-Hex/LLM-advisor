@@ -1,5 +1,8 @@
 # TrustedRouter Model Advisor
 
+[![Plugin validation](https://github.com/Lore-Hex/LLM-advisor/actions/workflows/plugin-validation.yml/badge.svg)](https://github.com/Lore-Hex/LLM-advisor/actions/workflows/plugin-validation.yml)
+[![Apache 2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
+
 Agent-readable guidance for choosing the right TrustedRouter model for a task.
 
 This repo contains a small, portable playbook that helps Codex, Claude Code, Hermes, and other coding agents pick models with live context about cost, speed, privacy, provider health, context length, prompt caching, and benchmark quality.
@@ -31,7 +34,41 @@ Playbook: https://raw.githubusercontent.com/Lore-Hex/LLM-advisor/main/SKILL.md
 Interactive picker: https://trustedrouter.com/choose
 ```
 
-### Install as a Codex skill
+### Install as a Codex plugin
+
+```bash
+codex plugin marketplace add Lore-Hex/LLM-advisor
+codex plugin add trustedrouter-model-advisor@lore-hex
+```
+
+Start a new Codex task, then ask:
+
+```text
+Use $trustedrouter-model-advisor to pick the best model for this task.
+```
+
+### Install as a Claude Code plugin
+
+```bash
+claude plugin marketplace add Lore-Hex/LLM-advisor
+claude plugin install trustedrouter-model-advisor@lore-hex
+```
+
+Start a new Claude Code session, then ask:
+
+```text
+Use the TrustedRouter model advisor to pick the best model for this task.
+```
+
+Both plugins include TrustedRouter and AI IQ MCP connections. Export your TrustedRouter key before starting the agent:
+
+```bash
+export TRUSTEDROUTER_API_KEY="sk-tr-v1-..."
+```
+
+### Install as a standalone Codex skill
+
+Use this older installation path when plugin marketplaces are unavailable:
 
 ```bash
 mkdir -p ~/.codex/skills
@@ -44,7 +81,9 @@ Then ask Codex:
 Use $trustedrouter-model-advisor to pick the best TrustedRouter model for this task.
 ```
 
-### Connect TrustedRouter MCP
+### Connect TrustedRouter MCP manually
+
+The plugin installs these MCP connections automatically. Use the commands below only for a standalone skill installation.
 
 TrustedRouter MCP endpoint:
 

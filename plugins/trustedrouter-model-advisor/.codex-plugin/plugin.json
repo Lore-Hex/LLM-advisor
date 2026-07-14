@@ -1,0 +1,53 @@
+{
+  "name": "trustedrouter-model-advisor",
+  "version": "1.0.0",
+  "description": "Choose the best TrustedRouter model for a task using live price, speed, quality, privacy, context, and provider-health data.",
+  "author": {
+    "name": "Lore Hex Corp",
+    "email": "security@trustedrouter.com",
+    "url": "https://trustedrouter.com"
+  },
+  "homepage": "https://github.com/Lore-Hex/LLM-advisor",
+  "repository": "https://github.com/Lore-Hex/LLM-advisor",
+  "license": "Apache-2.0",
+  "keywords": [
+    "llm",
+    "model-selection",
+    "trustedrouter",
+    "openai-compatible",
+    "benchmarking",
+    "routing"
+  ],
+  "skills": "./skills/",
+  "mcpServers": {
+    "trustedrouter": {
+      "type": "http",
+      "url": "https://trustedrouter.com/mcp",
+      "bearer_token_env_var": "TRUSTEDROUTER_API_KEY"
+    },
+    "aiiq": {
+      "type": "http",
+      "url": "https://www.aiiq.org/api/mcp"
+    }
+  },
+  "interface": {
+    "displayName": "TrustedRouter Model Advisor",
+    "shortDescription": "Pick the right model using live evidence",
+    "longDescription": "Compare models and routes using live TrustedRouter catalog, pricing, speed, privacy, context, uptime, and AI IQ benchmark data. Get a concrete recommendation, estimated cost, and a small evaluation plan before production use.",
+    "developerName": "Lore Hex Corp",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive"
+    ],
+    "websiteURL": "https://trustedrouter.com/choose",
+    "defaultPrompt": [
+      "Choose the best model for this task and estimate its cost",
+      "Compare a frontier model with cheaper open alternatives",
+      "Design a small model evaluation for my production workload"
+    ],
+    "brandColor": "#2C6ECB",
+    "composerIcon": "./assets/trustedrouter.svg",
+    "logo": "./assets/trustedrouter.png",
+    "screenshots": []
+  }
+}

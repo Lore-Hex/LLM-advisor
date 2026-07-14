@@ -1,0 +1,13 @@
+{
+  "trustedrouter": {
+    "type": "http",
+    "url": "https://trustedrouter.com/mcp",
+    "headers": {
+      "Authorization": "Bearer ${TRUSTEDROUTER_API_KEY}"
+    }
+  },
+  "aiiq": {
+    "type": "http",
+    "url": "https://www.aiiq.org/api/mcp"
+  }
+}

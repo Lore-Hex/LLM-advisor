@@ -1,0 +1,20 @@
+{
+  "name": "lore-hex",
+  "interface": {
+    "displayName": "Lore Hex"
+  },
+  "plugins": [
+    {
+      "name": "trustedrouter-model-advisor",
+      "source": {
+        "source": "local",
+        "path": "./plugins/trustedrouter-model-advisor"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

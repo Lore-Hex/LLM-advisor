@@ -1,0 +1,20 @@
+{
+  "name": "trustedrouter-model-advisor",
+  "version": "1.0.0",
+  "description": "Choose the best TrustedRouter model for a task using live price, speed, quality, privacy, context, and provider-health data.",
+  "author": {
+    "name": "Lore Hex Corp",
+    "email": "security@trustedrouter.com",
+    "url": "https://trustedrouter.com"
+  },
+  "homepage": "https://github.com/Lore-Hex/LLM-advisor",
+  "repository": "https://github.com/Lore-Hex/LLM-advisor",
+  "license": "Apache-2.0",
+  "keywords": [
+    "llm",
+    "model-selection",
+    "trustedrouter",
+    "benchmarking",
+    "routing"
+  ]
+}
