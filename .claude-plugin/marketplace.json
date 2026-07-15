@@ -9,7 +9,7 @@
   "plugins": [
     {
       "name": "trustedrouter-model-advisor",
-      "version": "1.0.1",
+      "version": "1.0.2",
       "description": "Choose the best TrustedRouter model using live price, speed, quality, privacy, context, and provider-health data.",
       "author": {
         "name": "Lore Hex Corp",

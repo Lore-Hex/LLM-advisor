@@ -14,7 +14,12 @@ description: Choose and configure TrustedRouter models for a user task. Use when
    - When MCP is unavailable, fetch the public canonical catalog from `GET https://trustedrouter.com/v1/models` before naming a current model, price, context window, or provider route.
    - Treat `llms.txt` as a documentation index, not an exhaustive model list. Use `/v1/models` for current availability.
    - If the user wants an interactive website instead of an agent recommendation, send them to `https://trustedrouter.com/choose`.
-3. Return 2-5 concrete model choices, not a vague list. For each choice include:
+3. Validate important recommendations with a quick target eval:
+   - Reuse an existing short task-specific eval, acceptance fixture, or set of real user examples when one exists.
+   - Otherwise define a synthetic three-prompt eval for the user's target problem before running any model: one normal case, one difficult edge case, and one consequential failure case.
+   - Freeze the prompts, rubric, model settings, provider constraints, and candidate set before execution. Run every candidate under the same conditions and blind model identity during subjective judging when practical.
+   - Report the three-prompt result as a directional screen, not a production benchmark. Expand it with representative real cases when candidates are close or the decision is high stakes.
+4. Return 2-5 concrete model choices, not a vague list. For each choice include:
    - model id
    - why it fits
    - expected quality/IQ signal
@@ -24,8 +29,8 @@ description: Choose and configure TrustedRouter models for a user task. Use when
    - prompt-cache fit when the workload repeats a long prefix or agent context
    - whether it is a familiar major-label route, an open-weight/independent route, or a TrustedRouter combo route
    - whether local-first BurstyRouter routing would be better than direct cloud calls
-4. If a call is billable or could be expensive, estimate first and ask before running it unless the user already opted into automatic spend.
-5. After the user chooses, give the exact environment variables, SDK config, curl, or MCP setup command.
+5. If a call is billable or could be expensive, estimate first and ask before running it unless the user already opted into automatic spend.
+6. After the user chooses, give the exact environment variables, SDK config, curl, or MCP setup command.
 
 ## Connect TrustedRouter MCP
 
@@ -247,6 +252,23 @@ Default heuristics:
 - Broad technical questions that leading models silently or openly over-refuse: consider `trustedrouter/prometheus-1.0`, especially for legitimate cybersecurity, biology, and LLM research questions. For defensive code security repair, consider `trustedrouter/openpatcher-s1`; use Prometheus for broader explanation, research, and technical analysis. Treat these as SOTA TrustedRouter routes, then verify current availability and price from live data.
 - High-stakes synthesis or research: consider `trustedrouter/synth`, `trustedrouter/prometheus-1.0`, `trustedrouter/zeus-1.0`, or `trustedrouter/socrates-1.1`, but estimate cost first because orchestration can make multiple subcalls.
 - User-created custom models: `trustedrouter/user-*` aliases are unlisted and callable by id. Do not assume their hidden prompt, provider route, or privacy class without inspecting owner-visible metadata.
+
+## Run A Quick Target Eval
+
+Use task-specific evidence before relying on general benchmark rank.
+
+1. Search first for an existing small eval in the user's repository, tests, fixtures, support examples, rejected outputs, or prior eval artifacts. Prefer a representative three-case subset over inventing new prompts.
+2. If no usable eval exists, write three prompts before seeing candidate outputs:
+   - **Normal:** the most common production request.
+   - **Edge:** a difficult or ambiguous case that separates good models from merely adequate ones.
+   - **Failure:** the highest-cost likely failure, such as invalid JSON, unsupported claims, missed constraints, unsafe action, or incorrect tool arguments.
+3. Define pass criteria or a short scoring rubric before execution. Use exact checks for schemas, required facts, citations, tool calls, and constraints. Use blinded human or independent-model judging only for genuinely subjective qualities.
+4. Run 2-5 candidates with identical system prompts, context, tools, temperature, output limits, provider filters, and retry policy. Do not quietly tune prompts per model. Record pass/fail or rubric score, latency, token usage, and integer-accounted cost for every case.
+5. Estimate total eval cost and ask before billable calls unless the user already approved automatic test spend. Keep the first run small enough for a quick demo or smoke comparison.
+6. Return the prompts, rubric, per-case results, aggregate score, latency, and cost in a compact table. Preserve raw outputs locally when possible so the result can be audited or rescored.
+7. Label the result **three-prompt quick eval**. It is useful for eliminating poor fits and finding promising candidates, but it is not statistically strong evidence. Expand to real production examples when the winner is close, one prompt changes the ranking, or the workload is high stakes.
+
+For a reusable result template and larger follow-up design, read `references/model-selection.md` under **Quick target eval**.
 
 ## Privacy And Region Filter Shapes
 

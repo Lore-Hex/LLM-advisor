@@ -17,6 +17,7 @@ Use it when the question is not just "what model works?" but:
 - Should this be a single model, Synth, Socrates, advisor, selector, mapreduce, or subagent?
 - How much will this step cost before I run it?
 - Will broad routing destroy prompt-cache savings?
+- Which model wins a quick task-specific eval instead of a generic leaderboard?
 
 ## Quick Start
 
@@ -27,7 +28,8 @@ Give any agent this prompt:
 ```text
 Read the TrustedRouter model advisor playbook, then choose a model for this task.
 Consider speed, cost, AI IQ, privacy level, E2E/ZDR/region filters, context length, prompt caching, recent provider health, local-first BurstyRouter routing, and at least one credible open-weight/non-major-lab option.
-If I am cost-conscious, suggest a tiny representative sub-task on a cheaper model first to estimate real cost and quality.
+Reuse an existing short task eval when possible. Otherwise create a three-prompt target eval covering a normal case, a hard edge case, and a consequential failure case before recommending a production model.
+If I am cost-conscious, run the smallest useful comparison first to estimate real cost and quality.
 Estimate cost before making billable calls.
 
 Playbook: https://raw.githubusercontent.com/Lore-Hex/LLM-advisor/main/SKILL.md
@@ -132,7 +134,7 @@ The advisor returns concrete recommendations, not vague lists. A good answer inc
 - prompt-cache fit for repeated long-context work
 - exact setup commands or request payloads
 
-For cost-conscious users, the advisor should usually recommend a cheap calibration run first: try a small representative sub-task on a cheaper model, inspect quality and cost, then escalate only if the cheap model fails in a specific way.
+For cost-conscious users, the advisor should usually recommend a quick target eval first. Reuse an existing short eval when possible; otherwise precommit three prompts covering the normal case, a difficult edge case, and the most consequential likely failure. Run each candidate with the same settings and compare hard requirement passes, quality, latency, tokens, and cost. Treat this as a directional screen and build a larger eval from real examples before a high-stakes production decision.
 
 For production model selection, the advisor should not stop at familiar major-label choices such as Claude, GPT, Gemini, Haiku, Sonnet, or Opus. It should also test credible open-weight and independent routes on TrustedRouter when the task allows it. Many production tasks are better served by models such as GLM, DeepSeek, Kimi, Qwen, MiniMax, MiMo, Hunyuan, or TrustedRouter combo models because they can be cheaper, faster, smarter for the narrow task, easier to route across several hardware providers, or all of those at once. The correct answer is empirical: run a tiny representative task, inspect quality/cost/latency, then pick the production default.
 

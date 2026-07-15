@@ -80,6 +80,13 @@ def main() -> int:
         "skill must distinguish llms.txt from the live model catalog",
         errors,
     )
+    require(
+        "three-prompt quick eval" in skill_text
+        and "Reuse an existing short task-specific eval" in skill_text
+        and "one normal case, one difficult edge case, and one consequential failure case" in skill_text,
+        "skill must require the reusable three-prompt target-eval workflow",
+        errors,
+    )
 
     codex_servers = codex.get("mcpServers", {})
     require(isinstance(codex_servers, dict), "Codex mcpServers must be an object", errors)
