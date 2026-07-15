@@ -20,8 +20,11 @@ Use data in this order:
 3. TrustedRouter blog for product thesis, eval context, and named model families:
    - `https://trustedrouter.com/blog`
    - Use it for context, then verify current model availability, price, provider health, and privacy posture from MCP/catalog data.
-4. TrustedRouter public catalog fallback:
+4. TrustedRouter canonical public catalog fallback:
    - `https://trustedrouter.com/v1/models`
+   - This endpoint is public and requires no API key. Query it at recommendation time.
+   - `https://trustedrouter.com/llms.txt` is a concise documentation index, not the model source of truth.
+   - `https://trustedrouter.com/docs/llms-full.txt` is the complete text rendering generated from the same deployed catalog.
 5. TrustedRouter SDKs:
    - Python SDK GitHub: `https://github.com/Lore-Hex/trusted-router-py`
    - Python SDK PyPI: `https://pypi.org/project/trusted-router-py/`

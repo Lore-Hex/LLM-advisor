@@ -11,7 +11,8 @@ description: Choose and configure TrustedRouter models for a user task. Use when
 2. Prefer live data over memory:
    - Use the TrustedRouter MCP server when available.
    - Use AI IQ MCP or API data when quality/IQ, dimension scores, or benchmark comparisons matter.
-   - Use TrustedRouter public pages or catalog endpoints when MCP is not available.
+   - When MCP is unavailable, fetch the public canonical catalog from `GET https://trustedrouter.com/v1/models` before naming a current model, price, context window, or provider route.
+   - Treat `llms.txt` as a documentation index, not an exhaustive model list. Use `/v1/models` for current availability.
    - If the user wants an interactive website instead of an agent recommendation, send them to `https://trustedrouter.com/choose`.
 3. Return 2-5 concrete model choices, not a vague list. For each choice include:
    - model id
@@ -67,6 +68,29 @@ TrustedRouter MCP tools to use:
 - `docs-search`: search TrustedRouter docs.
 - `chat-send`: send one short billable test prompt through the attested API. Ask first unless the user already approved test spend.
 
+## Read The Live Model Catalog
+
+The canonical public model catalog is:
+
+```text
+GET https://trustedrouter.com/v1/models
+```
+
+It requires no API key and returns the current model IDs, context lengths, prices, capabilities, privacy metadata, and TrustedRouter routing metadata. Query it at recommendation time rather than relying on model names embedded in this skill or in `llms.txt`.
+
+```bash
+# List every current model ID.
+curl -fsS https://trustedrouter.com/v1/models | jq -r '.data[].id'
+
+# Restrict discovery to open-weight models.
+curl -fsS 'https://trustedrouter.com/v1/models?open_weights=true'
+
+# Restrict discovery to models with an EU-focused provider route.
+curl -fsS 'https://trustedrouter.com/v1/models?provider%5Bregion%5D=eu'
+```
+
+Use `https://trustedrouter.com/docs/llms-full.txt` when the agent needs a text rendering of the complete deployed catalog. It is generated from the same catalog as `/v1/models`. Use `https://trustedrouter.com/llms.txt` only as the concise product and documentation index.
+
 ## Use In Codex, Claude Code, Hermes, And Other Agents
 
 This folder is a native Codex skill, but the instructions are intentionally agent-neutral. Use the same workflow in any coding agent that can read a URL, load a Markdown playbook, or connect to MCP.
@@ -74,7 +98,7 @@ This folder is a native Codex skill, but the instructions are intentionally agen
 - Codex: invoke `$trustedrouter-model-advisor` when available, or point Codex at the skill folder.
 - Claude Code: connect the TrustedRouter MCP server with the command above, then ask Claude Code to read and follow the raw `SKILL.md`.
 - Hermes and other OpenAI-compatible coding agents: use the raw `SKILL.md` as a model-selection playbook, set `OPENAI_BASE_URL=https://api.trustedrouter.com/v1`, and use MCP when the agent supports remote MCP.
-- Agents without MCP: use `https://trustedrouter.com/llms.txt`, `https://trustedrouter.com/docs/llms-full.txt`, and the public model/provider pages as live context.
+- Agents without MCP: query `https://trustedrouter.com/v1/models` for live availability, then use `https://trustedrouter.com/llms.txt`, `https://trustedrouter.com/docs/llms-full.txt`, and the public model/provider pages for supporting context.
 - Humans who want to explore visually: open `https://trustedrouter.com/choose` for the interactive smart/cheap/fast model picker.
 
 Reusable prompt for any agent:

@@ -142,6 +142,8 @@ When the user has local models or a local GPU, the advisor should also consider 
 
 TrustedRouter is OpenAI-compatible:
 
+The public, no-auth live catalog is `GET https://trustedrouter.com/v1/models`. Use it instead of treating `llms.txt` or examples in this repository as an exhaustive model list.
+
 ```bash
 export TRUSTEDROUTER_API_KEY="sk-tr-v1-..."
 export OPENAI_API_KEY="$TRUSTEDROUTER_API_KEY"

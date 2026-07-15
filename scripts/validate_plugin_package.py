@@ -69,6 +69,18 @@ def main() -> int:
     for source, packaged in source_pairs:
         require(source.read_bytes() == packaged.read_bytes(), f"packaged copy is stale: {packaged.relative_to(ROOT)}", errors)
 
+    skill_text = (ROOT / "SKILL.md").read_text(encoding="utf-8")
+    require(
+        "GET https://trustedrouter.com/v1/models" in skill_text,
+        "skill must name the canonical live model catalog",
+        errors,
+    )
+    require(
+        "not an exhaustive model list" in skill_text,
+        "skill must distinguish llms.txt from the live model catalog",
+        errors,
+    )
+
     codex_servers = codex.get("mcpServers", {})
     require(isinstance(codex_servers, dict), "Codex mcpServers must be an object", errors)
     if isinstance(codex_servers, dict):
