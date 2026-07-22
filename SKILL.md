@@ -241,7 +241,7 @@ Read `references/model-selection.md` when the task needs a careful recommendatio
 
 Default heuristics:
 
-- Sensitive legal, healthcare, enterprise, or customer data: start with `trustedrouter/zdr`; add `provider.data_collection = "deny"` for an explicit ZDR filter; consider `trustedrouter/e2e` when end-to-end encrypted providers are required; use `trustedrouter/eu` plus the EU regional base URL for Europe-focused workloads; use `provider.jurisdiction = "us"` when the user requires US-based providers.
+- Sensitive legal, healthcare, enterprise, or customer data: use `provider.min_privacy = "zdr"` for a fail-closed ZDR floor. When the requirement is stronger than ZDR, use `provider.min_privacy = "confidential"`; it requires both provider-side confidential compute and E2EE. The `trustedrouter/zdr`, `trustedrouter/e2e`, and `trustedrouter/confidential` aliases select the corresponding pools. Use `trustedrouter/eu` plus the EU regional base URL for Europe-focused workloads and `provider.jurisdiction = "us"` when the user requires US-based providers.
 - Maximum uptime and broad fallback: use `trustedrouter/auto` or an explicit model with multiple healthy provider endpoints.
 - Cheap experimentation: start with `trustedrouter/cheap`, then compare one stronger candidate if the task matters. If the user is cost-conscious, run or suggest a tiny representative sub-task on a cheaper model first to estimate real cost and verify whether the cheaper model is already good enough before escalating.
 - Fast small tasks: start with `trustedrouter/fast` or a directly fast provider endpoint from the live catalog.
@@ -276,20 +276,20 @@ Use aliases for easy defaults and provider filters for hard requirements:
 
 ```json
 {
-  "model": "trustedrouter/zdr",
+  "model": "your/model",
   "provider": {
-    "data_collection": "deny",
-    "jurisdiction": "us",
-    "only": ["anthropic", "openai"],
+    "min_privacy": "confidential",
     "allow_fallbacks": true
   }
 }
 ```
 
-- `trustedrouter/zdr`: zero-retention providers first.
-- `trustedrouter/e2e`: provider-side confidential or end-to-end encrypted routes.
+- `trustedrouter/zdr`: select the zero-retention route pool.
+- `trustedrouter/e2e` and `trustedrouter/confidential`: select the same pool of routes that have both provider-side confidential compute and E2EE.
 - `trustedrouter/eu`: EU-focused route pool; pair with `https://api-europe-west4.quillrouter.com/v1` when the gateway region matters.
-- `provider.data_collection = "deny"`: explicit ZDR filter.
+- `provider.min_privacy = "zdr"`: hard ZDR floor. It fails closed if the selected model/provider has no qualifying endpoint.
+- `provider.min_privacy = "confidential"`: stronger hard floor requiring both provider-side confidential compute and E2EE. The value alias `e2ee` is also accepted.
+- `provider.data_collection = "deny"`: OpenRouter-compatible soft routing preference. Never describe it as a hard privacy guarantee.
 - `provider.jurisdiction = "us"`: US-based provider filter. Do not invent `jurisdiction = "eu"`; use `trustedrouter/eu`, the EU regional base URL, and explicit `provider.only` allowlists instead.
 - `provider.only`, `provider.ignore`, `provider.order`, `provider.sort`, and `allow_fallbacks` narrow or rank eligible endpoints. Tell the user if filters reduce fallback reliability.
 - With BurstyRouter, `local` is a local router target rather than a TrustedRouter cloud provider. `provider.only = ["local"]` means hard local. `provider.order = ["local"]` means local first, then burst if policy allows it.

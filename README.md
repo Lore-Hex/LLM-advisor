@@ -240,8 +240,8 @@ Use the TrustedRouter SDKs when you want typed errors, region helpers, retries, 
 
 | Need | Start with |
 |---|---|
-| Sensitive legal, healthcare, enterprise, or customer data | `trustedrouter/zdr` plus `provider.data_collection = "deny"` |
-| End-to-end encrypted provider path | `trustedrouter/e2e` |
+| Sensitive legal, healthcare, enterprise, or customer data | `provider.min_privacy = "zdr"` for a hard ZDR floor |
+| Confidential-compute + end-to-end encrypted provider path | `provider.min_privacy = "confidential"` for a hard E2E floor |
 | Europe-focused routing | `trustedrouter/eu` plus the EU regional base URL when needed |
 | US-provider-only policy | `provider.jurisdiction = "us"` |
 | Cheap experimentation | `trustedrouter/cheap`, then one stronger candidate if needed |
@@ -263,11 +263,9 @@ Use aliases for convenient defaults and provider filters for hard requirements:
 
 ```json
 {
-  "model": "trustedrouter/zdr",
+  "model": "your/model",
   "provider": {
-    "data_collection": "deny",
-    "jurisdiction": "us",
-    "only": ["anthropic", "openai"],
+    "min_privacy": "confidential",
     "allow_fallbacks": true
   }
 }
@@ -275,10 +273,12 @@ Use aliases for convenient defaults and provider filters for hard requirements:
 
 Common filters:
 
-- `trustedrouter/zdr`: zero-data-retention providers first.
-- `trustedrouter/e2e`: end-to-end encrypted or confidential provider paths.
+- `trustedrouter/zdr`: select the zero-retention route pool.
+- `trustedrouter/e2e` and `trustedrouter/confidential`: select the same confidential-compute + provider-E2EE pool.
 - `trustedrouter/eu`: EU-focused route pool.
-- `provider.data_collection = "deny"`: explicit ZDR requirement.
+- `provider.min_privacy = "zdr"`: hard ZDR floor. The request fails if the selected model/provider cannot satisfy it.
+- `provider.min_privacy = "confidential"`: stronger hard floor requiring both provider-side confidential compute and E2EE. `e2ee` is an accepted value alias.
+- `provider.data_collection = "deny"`: OpenRouter-compatible soft routing preference. Do not present it as a fail-closed privacy guarantee.
 - `provider.jurisdiction = "us"`: US-based provider filter.
 - `provider.only`: strict provider allowlist.
 - `provider.ignore`: provider denylist.

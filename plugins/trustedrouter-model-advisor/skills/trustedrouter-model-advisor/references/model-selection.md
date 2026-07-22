@@ -143,7 +143,7 @@ Notes:
 | Task | Primary signals | Good starting routes |
 |---|---|---|
 | Sensitive legal or customer work | ZDR, provider retention, reliability, cost | `trustedrouter/zdr`, explicit ZDR endpoints |
-| End-to-end encrypted work | E2E provider posture, availability, latency | `trustedrouter/e2e`, explicit E2E endpoints |
+| Confidential + end-to-end encrypted work | Both confidential-compute and E2EE posture, availability, latency | `provider.min_privacy = "confidential"` |
 | Europe-focused work | EU provider/region, data residency, latency | `trustedrouter/eu`, EU regional base URL |
 | US-only provider policy | provider headquarters/jurisdiction, contract allowlist | `provider.jurisdiction = "us"`, optional `provider.only` |
 | Cheap tests and eval sweeps | low output price, provider health, acceptable IQ | `trustedrouter/cheap`, direct cheap models |
@@ -173,7 +173,7 @@ Always explain who may see the prompt:
 - Attested TrustedRouter gateway: prompt TLS terminates inside the measured gateway.
 - Downstream provider: the selected provider still receives the prompt unless the route is an E2E confidential provider with that guarantee.
 - ZDR route: provider/data policy should say no training or no retention. Verify from live provider metadata when possible.
-- E2E route: use only when the provider path itself provides end-to-end encrypted or confidential-compute handling.
+- Confidential/E2E route: use only when the provider path provides both confidential compute and provider-side end-to-end encryption.
 - Control plane and MCP: metadata/catalog/docs calls do not need prompt content. `chat-send` forwards only the short test prompt.
 
 ## Provider And Region Filters
@@ -184,9 +184,9 @@ Common request body shapes:
 
 ```json
 {
-  "model": "trustedrouter/zdr",
+  "model": "your/model",
   "provider": {
-    "data_collection": "deny"
+    "min_privacy": "confidential"
   }
 }
 ```
@@ -213,8 +213,9 @@ Common request body shapes:
 
 Filter meanings:
 
-- `provider.data_collection = "deny"`: explicit zero-data-retention filter.
-- `provider.min_privacy = "zdr"` or `"maximum"`: privacy-tier floor when available.
+- `provider.min_privacy = "zdr"`: hard zero-retention floor. It fails closed if the selected model/provider has no qualifying route.
+- `provider.min_privacy = "confidential"`: stronger hard floor requiring both provider-side confidential compute and E2EE. `e2ee`, `max`, and `maximum` are accepted value aliases.
+- `provider.data_collection = "deny"`: OpenRouter-compatible soft preference. It is not a fail-closed privacy requirement.
 - `provider.jurisdiction = "us"`: restrict to US-based providers. Supported aliases include `us`, `usa`, `united-states`, and `united states`.
 - `provider.only`: allowlist provider slugs. Use for contracts, BAAs, enterprise allowlists, or strict EU/provider choices.
 - `provider.ignore`: denylist provider slugs.
@@ -229,7 +230,7 @@ Region guidance:
 - For EU gateway routing, set base URL to `https://api-europe-west4.quillrouter.com/v1` and model to `trustedrouter/eu`.
 - `trustedrouter/eu` is EU-focused routing, not a blanket data-residency promise for every upstream provider. Use `provider.only` for strict approved-provider lists.
 - Do not use `provider.jurisdiction = "eu"`; the API currently supports only US jurisdiction filtering. For Europe, use the EU alias, regional base URL, and explicit provider allowlists.
-- For sensitive legal, healthcare, or financial workloads, combine the alias with a hard filter when possible: `trustedrouter/zdr` plus `provider.data_collection = "deny"`, or `trustedrouter/e2e` plus an allowlist of approved E2E providers.
+- For sensitive legal, healthcare, or financial workloads, use the hard floor that matches the requirement: `provider.min_privacy = "zdr"` for ZDR, or `provider.min_privacy = "confidential"` for both confidential compute and provider E2EE. These filters also compose with an explicitly selected model and `provider.only` allowlists.
 
 ## Cost Estimation Details
 

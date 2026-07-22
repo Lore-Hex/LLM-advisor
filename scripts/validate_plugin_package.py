@@ -87,6 +87,19 @@ def main() -> int:
         "skill must require the reusable three-prompt target-eval workflow",
         errors,
     )
+    require(
+        'provider.min_privacy = "zdr"' in skill_text
+        and 'provider.min_privacy = "confidential"' in skill_text
+        and "requires both provider-side confidential compute and E2EE" in skill_text,
+        "skill must distinguish hard ZDR and confidential+E2EE privacy floors",
+        errors,
+    )
+    require(
+        'provider.data_collection = "deny"' in skill_text
+        and "soft routing preference" in skill_text,
+        "skill must not present data_collection=deny as a fail-closed guarantee",
+        errors,
+    )
 
     codex_servers = codex.get("mcpServers", {})
     require(isinstance(codex_servers, dict), "Codex mcpServers must be an object", errors)
