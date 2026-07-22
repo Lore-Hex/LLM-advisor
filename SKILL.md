@@ -288,7 +288,7 @@ Use aliases for easy defaults and provider filters for hard requirements:
 - `trustedrouter/e2e` and `trustedrouter/confidential`: select the same pool of routes that have both provider-side confidential compute and E2EE.
 - `trustedrouter/eu`: EU-focused route pool; pair with `https://api-europe-west4.quillrouter.com/v1` when the gateway region matters.
 - `provider.min_privacy = "zdr"`: hard ZDR floor. It fails closed if the selected model/provider has no qualifying endpoint.
-- `provider.min_privacy = "confidential"`: stronger hard floor requiring both provider-side confidential compute and E2EE. The value alias `e2ee` is also accepted.
+- `provider.min_privacy = "confidential"`: stronger hard floor requiring both provider-side confidential compute and E2EE. The value aliases `e2e` and `e2ee` are also accepted.
 - `provider.data_collection = "deny"`: OpenRouter-compatible soft routing preference. Never describe it as a hard privacy guarantee.
 - `provider.jurisdiction = "us"`: US-based provider filter. Do not invent `jurisdiction = "eu"`; use `trustedrouter/eu`, the EU regional base URL, and explicit `provider.only` allowlists instead.
 - `provider.only`, `provider.ignore`, `provider.order`, `provider.sort`, and `allow_fallbacks` narrow or rank eligible endpoints. Tell the user if filters reduce fallback reliability.

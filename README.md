@@ -277,7 +277,7 @@ Common filters:
 - `trustedrouter/e2e` and `trustedrouter/confidential`: select the same confidential-compute + provider-E2EE pool.
 - `trustedrouter/eu`: EU-focused route pool.
 - `provider.min_privacy = "zdr"`: hard ZDR floor. The request fails if the selected model/provider cannot satisfy it.
-- `provider.min_privacy = "confidential"`: stronger hard floor requiring both provider-side confidential compute and E2EE. `e2ee` is an accepted value alias.
+- `provider.min_privacy = "confidential"`: stronger hard floor requiring both provider-side confidential compute and E2EE. `e2e` and `e2ee` are accepted value aliases.
 - `provider.data_collection = "deny"`: OpenRouter-compatible soft routing preference. Do not present it as a fail-closed privacy guarantee.
 - `provider.jurisdiction = "us"`: US-based provider filter.
 - `provider.only`: strict provider allowlist.
