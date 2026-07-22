@@ -214,7 +214,7 @@ Common request body shapes:
 Filter meanings:
 
 - `provider.min_privacy = "zdr"`: hard zero-retention floor. It fails closed if the selected model/provider has no qualifying route.
-- `provider.min_privacy = "confidential"`: stronger hard floor requiring both provider-side confidential compute and E2EE. `e2ee`, `max`, and `maximum` are accepted value aliases.
+- `provider.min_privacy = "confidential"`: stronger hard floor requiring both provider-side confidential compute and E2EE. `e2e`, `e2ee`, `max`, and `maximum` are accepted value aliases.
 - `provider.data_collection = "deny"`: OpenRouter-compatible soft preference. It is not a fail-closed privacy requirement.
 - `provider.jurisdiction = "us"`: restrict to US-based providers. Supported aliases include `us`, `usa`, `united-states`, and `united states`.
 - `provider.only`: allowlist provider slugs. Use for contracts, BAAs, enterprise allowlists, or strict EU/provider choices.
