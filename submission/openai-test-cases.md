@@ -32,7 +32,7 @@ No account data required. Public catalog tools are sufficient.
 **Expected behavior**
 
 - Query model, endpoint, and provider privacy metadata.
-- Start from `trustedrouter/zdr` and enforce `provider.data_collection = "deny"` plus `provider.jurisdiction = "us"`.
+- Start from `trustedrouter/zdr` and enforce the fail-closed `provider.min_privacy = "zdr"` floor plus `provider.jurisdiction = "us"`.
 - Verify context length and available endpoints before recommending a model.
 - Clearly distinguish provider contractual posture from TrustedRouter gateway attestation.
 
