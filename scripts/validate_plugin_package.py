@@ -76,6 +76,12 @@ def main() -> int:
         errors,
     )
     require(
+        "GET https://trustedrouter.com/v1/providers" in skill_text
+        and "GET https://trustedrouter.com/v1/models/{author}/{slug}/endpoints" in skill_text,
+        "skill must inspect the live provider roster and exact model endpoints",
+        errors,
+    )
+    require(
         "not an exhaustive model list" in skill_text,
         "skill must distinguish llms.txt from the live model catalog",
         errors,
@@ -99,6 +105,12 @@ def main() -> int:
         'provider.data_collection = "deny"' in skill_text
         and "soft routing preference" in skill_text,
         "skill must not present data_collection=deny as a fail-closed guarantee",
+        errors,
+    )
+    require(
+        "primary public leaderboard rank" in skill_text
+        and "Do not use TTFB to rank model routes" in skill_text,
+        "skill must use TTFT-first public performance ranking",
         errors,
     )
 

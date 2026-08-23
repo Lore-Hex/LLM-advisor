@@ -12,6 +12,7 @@ description: Choose and configure TrustedRouter models for a user task. Use when
    - Use the TrustedRouter MCP server when available.
    - Use AI IQ MCP or API data when quality/IQ, dimension scores, or benchmark comparisons matter.
    - When MCP is unavailable, fetch the public canonical catalog from `GET https://trustedrouter.com/v1/models` before naming a current model, price, context window, or provider route.
+   - Fetch `GET https://trustedrouter.com/v1/providers` for the current provider roster and tracked provider-level privacy posture. For a specific model, fetch `GET https://trustedrouter.com/v1/models/{author}/{slug}/endpoints` and decide from the exact endpoint rows.
    - Treat `llms.txt` as a documentation index, not an exhaustive model list. Use `/v1/models` for current availability.
    - If the user wants an interactive website instead of an agent recommendation, send them to `https://trustedrouter.com/choose`.
 3. Validate important recommendations with a quick target eval:
@@ -73,15 +74,17 @@ TrustedRouter MCP tools to use:
 - `docs-search`: search TrustedRouter docs.
 - `chat-send`: send one short billable test prompt through the attested API. Ask first unless the user already approved test spend.
 
-## Read The Live Model Catalog
+## Read The Live Model And Provider Catalog
 
-The canonical public model catalog is:
+The canonical public discovery endpoints are:
 
 ```text
 GET https://trustedrouter.com/v1/models
+GET https://trustedrouter.com/v1/providers
+GET https://trustedrouter.com/v1/models/{author}/{slug}/endpoints
 ```
 
-It requires no API key and returns the current model IDs, context lengths, prices, capabilities, privacy metadata, and TrustedRouter routing metadata. Query it at recommendation time rather than relying on model names embedded in this skill or in `llms.txt`.
+They require no API key. The model catalog returns current IDs, context lengths, prices, capabilities, privacy metadata, and routing metadata. The provider catalog returns the current provider roster. The endpoint route returns the concrete providers, credential path, prices, and privacy posture for one model. Query them at recommendation time rather than relying on provider or model names embedded in this skill or in `llms.txt`.
 
 ```bash
 # List every current model ID.
@@ -92,7 +95,16 @@ curl -fsS 'https://trustedrouter.com/v1/models?open_weights=true'
 
 # Restrict discovery to models with an EU-focused provider route.
 curl -fsS 'https://trustedrouter.com/v1/models?provider%5Bregion%5D=eu'
+
+# Inspect the current provider roster and tracked privacy fields.
+curl -fsS https://trustedrouter.com/v1/providers \
+  | jq -r '.data[] | [.id, .provider_confidential_compute, .provider_e2ee, .provider_zero_data_retention, .prepaid_zero_data_retention] | @tsv'
+
+# Inspect every concrete endpoint for one model. Replace author and slug with a live model ID.
+curl -fsS https://trustedrouter.com/v1/models/author/slug/endpoints
 ```
+
+The provider list is ordered for discovery: TrustedRouter first, then providers with tracked confidential-compute plus E2EE posture, then ZDR providers, then the rest. This order is not a substitute for checking the exact model endpoint. Account-scoped prepaid ZDR and BYOK policy can differ for the same provider.
 
 Use `https://trustedrouter.com/docs/llms-full.txt` when the agent needs a text rendering of the complete deployed catalog. It is generated from the same catalog as `/v1/models`. Use `https://trustedrouter.com/llms.txt` only as the concise product and documentation index.
 
@@ -329,11 +341,13 @@ For cost-conscious workflows:
 
 For speed, prefer live TrustedRouter provider health and recent benchmark/leaderboard data. Distinguish:
 
-- time to first token
+- time to first token, which is the primary public leaderboard rank
 - output tokens per second
 - full response wall time
 - orchestration overhead from parallel or serial subcalls
 - provider diversity and fallback health when production uptime matters
+
+Treat uptime as a separate reliability signal and a TTFT tie-breaker. Do not use TTFB to rank model routes when it is only measuring the shared gateway response path.
 
 For BurstyRouter, separate local and cloud cost clearly. Local tokens have no TrustedRouter API spend but still use local hardware, battery, memory, and time. Bursted calls are billed by TrustedRouter and should respect `-max-cloud-spend` and the user's cloud policy.
 

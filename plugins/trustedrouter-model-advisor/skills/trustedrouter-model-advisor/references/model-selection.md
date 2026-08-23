@@ -22,7 +22,9 @@ Use data in this order:
    - Use it for context, then verify current model availability, price, provider health, and privacy posture from MCP/catalog data.
 4. TrustedRouter canonical public catalog fallback:
    - `https://trustedrouter.com/v1/models`
-   - This endpoint is public and requires no API key. Query it at recommendation time.
+   - `https://trustedrouter.com/v1/providers`
+   - `https://trustedrouter.com/v1/models/{author}/{slug}/endpoints`
+   - These endpoints are public and require no API key. Query them at recommendation time. Use the model endpoint rows, rather than a provider-wide badge alone, for final price and privacy decisions.
    - `https://trustedrouter.com/llms.txt` is a concise documentation index, not the model source of truth.
    - `https://trustedrouter.com/docs/llms-full.txt` is the complete text rendering generated from the same deployed catalog.
 5. TrustedRouter SDKs:
@@ -68,7 +70,7 @@ Production recommendations should usually include:
 - one fallback-capable route when uptime matters
 - one privacy-constrained route when the data requires it
 
-Examples of non-major-label families to consider from the live catalog include GLM/Z.AI, DeepSeek, Kimi, Qwen, MiniMax, MiMo, Hunyuan, Cerebras-hosted OSS routes, and TrustedRouter combo models such as Prometheus, Socrates, Synth, advisor, selector, mapreduce, and subagent routes. Verify exact availability and provider endpoints from MCP/catalog data before naming a current production default.
+Examples of non-major-label families to consider from the live catalog include GLM/Z.AI, DeepSeek, Kimi, Qwen, MiniMax, MiMo, Hunyuan, Gemma, Nemotron, Granite, Inkling, Cerebras-hosted OSS routes, and TrustedRouter combo models such as Prometheus, Socrates, Synth, advisor, selector, mapreduce, and subagent routes. Provider and model availability changes frequently, so verify the exact current endpoint rows from MCP or the public catalog before naming a production default.
 
 The recommendation should be empirical. Suggest a tiny representative production-like test before committing:
 
@@ -270,10 +272,12 @@ For BurstyRouter:
 
 Do not collapse speed into one number. If available, show:
 
-- TTFT: responsiveness.
+- TTFT: responsiveness and the primary public leaderboard rank.
 - Output tokens/sec: generation speed.
 - Wall time: likely user-visible completion time.
 - Failure/fallback risk: high error rate can dominate latency.
+
+Use uptime as separate reliability evidence and as a TTFT tie-breaker. Do not rank routes by TTFB when it reflects the shared gateway response path rather than provider model responsiveness.
 
 For orchestration:
 
