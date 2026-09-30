@@ -1,5 +1,10 @@
 # OpenAI Universal Plugin Submission
 
+> September 2026 update: use [the new public ChatGPT package](chatgpt-2026-09.md)
+> for directory submissions. The legacy instructions below describe the
+> authenticated coding-agent integration. `/mcp` now requires authentication
+> for all tools; the new `/mcp/advisor` is a separate public read-only service.
+
 ## Submission Type
 
 - Type: With MCP
