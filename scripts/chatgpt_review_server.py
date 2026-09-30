@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Loopback-only review harness for the real public advisor MCP endpoint.
 
 This is a developer walkthrough, not a mock ChatGPT UI. No credentials, cookies
@@ -72,7 +71,7 @@ def main():
                     request = Request(ENDPOINT, data=payload, headers={"Content-Type": "application/json", "Accept": "application/json, text/event-stream"})
                     with urlopen(request, timeout=30) as response:
                         self.respond(response.read())
-            except Exception as exc:
+            except (OSError, ValueError, RuntimeError) as exc:
                 self.respond(json.dumps({"error": {"message": type(exc).__name__}}).encode(), 502)
 
     print(f"Review harness: http://127.0.0.1:{args.port}; backend={'local test' if client else ENDPOINT}", flush=True)

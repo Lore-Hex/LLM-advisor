@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Validate and build the public ChatGPT submission, without local credentials.
 
 Uses the September 2026 public submission format, which includes review
