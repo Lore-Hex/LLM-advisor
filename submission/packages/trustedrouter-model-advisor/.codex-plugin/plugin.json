@@ -1,6 +1,6 @@
 {
   "name": "trustedrouter-model-advisor",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Compare live AI model routes, estimate text-token costs, check provider privacy evidence, and plan a small evaluation using TrustedRouter's public catalog.",
   "author": {
     "name": "Lore Hex Corp",
@@ -35,6 +35,7 @@
   "extensions": {
     "com.openai": {
       "review": {
+        "demo_recording_url": "https://github.com/Lore-Hex/LLM-advisor/releases/download/chatgpt-model-advisor-v1.1.1/trustedrouter-model-advisor-walkthrough.mp4",
         "commerce": false,
         "commerce_description": "Free read-only public catalog advisor. No checkout, paid invocation, subscriptions, or account access.",
         "test_cases": {
