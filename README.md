@@ -21,6 +21,25 @@ Use it when the question is not just "what model works?" but:
 
 ## Quick Start
 
+### ChatGPT public advisor
+
+The public ChatGPT package is in
+[`submission/packages/trustedrouter-model-advisor`](submission/packages/trustedrouter-model-advisor).
+Directory review and publication status are tracked in the
+[submission record](submission/chatgpt-2026-09.md).
+
+It compares live model routes, estimates token costs, checks linked provider
+privacy evidence, and plans a three-prompt evaluation. It needs no account or
+API key. Its public, read-only MCP endpoint is:
+
+```text
+https://trustedrouter.com/mcp/advisor
+```
+
+This package does not run models, read balances, buy credits, or change agent
+settings. Upstream privacy evidence does not change how ChatGPT processes your
+conversation. The authenticated local plugins below remain separate.
+
 ### Use the playbook directly
 
 Give any agent this prompt:

@@ -38,6 +38,25 @@ draft is not submitting or publication. Record the actual state below.
 
 ## Status
 
-Package prepared. Production endpoint, domain verification, walkthrough and
-review submission remain to be verified. Update this section from actual
-dashboard and production evidence, not planned actions.
+Backend [PR 1440](https://github.com/Lore-Hex/quill-router/pull/1440) and package
+[PR 3](https://github.com/Lore-Hex/LLM-advisor/pull/3) are merged.
+The standard [GCP rollout](https://github.com/Lore-Hex/quill-router/actions/runs/36784751228)
+completed successfully at revision `8b99a320`, including the public service.
+AWS and Azure were not changed by this release.
+
+Verification:
+- 60 focused tests passed locally; Ruff and mypy passed.
+- Full CI and the coverage gate passed (87% coverage on the backend PR).
+- The duplicate full local suite was interrupted because of severe laptop
+  resource contention; full-suite verification is from CI, not a claimed local pass.
+- Six production walkthrough scenarios and 13 real MCP calls passed.
+- Anonymous access to the existing authenticated `/mcp` still returns 401.
+- OpenAI verified the public domain challenge. Metadata and skill checks passed.
+
+The [walkthrough and actual MCP receipts](https://github.com/Lore-Hex/LLM-advisor/releases/tag/chatgpt-model-advisor-v1.1.1)
+contain public metadata only. The video is a developer harness, not a simulated
+ChatGPT UI or a claim of directory approval.
+
+OpenAI draft: `plugin_asdk_app_6abd7c6a72608191ac7256939794d793`, under verified
+Lore Hex Corp. Tool discovery, final review submission and publication still
+need confirmation in the portal; a draft upload is not a submitted review.
