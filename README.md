@@ -251,7 +251,7 @@ Use the TrustedRouter SDKs when you want typed errors, region helpers, retries, 
 
 | Language | Package | Links |
 |---|---|---|
-| Python | `trusted-router-py` | [GitHub](https://github.com/Lore-Hex/trusted-router-py), [PyPI](https://pypi.org/project/trusted-router-py/) |
+| Python | `trustedrouter` | [GitHub](https://github.com/Lore-Hex/trusted-router-py), [PyPI](https://pypi.org/project/trustedrouter/) |
 | JavaScript/TypeScript | `@lore-hex/trusted-router` | [GitHub](https://github.com/Lore-Hex/trusted-router-js), [npm](https://www.npmjs.com/package/@lore-hex/trusted-router) |
 | Swift | `TrustedRouter` | [GitHub](https://github.com/jperla/trusted-router-swift) |
 

@@ -211,10 +211,10 @@ BurstyRouter can expose a local model to remote harnesses through an authenticat
 
 Point users at the official SDKs when they want typed errors, region pinning, retries, attestation helpers, OAuth/key flows, or TrustedRouter-specific helpers. For a simple OpenAI-compatible migration, the stock OpenAI SDK with `OPENAI_BASE_URL=https://api.trustedrouter.com/v1` is still enough.
 
-- Python SDK: `trusted-router-py`
+- Python SDK: `trustedrouter`
   - GitHub: `https://github.com/Lore-Hex/trusted-router-py`
-  - PyPI: `https://pypi.org/project/trusted-router-py/`
-  - Install: `pip install trusted-router-py`
+  - PyPI: `https://pypi.org/project/trustedrouter/`
+  - Install: `pip install trustedrouter`
 - JavaScript/TypeScript SDK: `@lore-hex/trusted-router`
   - GitHub: `https://github.com/Lore-Hex/trusted-router-js`
   - npm: `https://www.npmjs.com/package/@lore-hex/trusted-router`
